@@ -130,7 +130,7 @@ int main(int argc, char *argv[]) {
     }
   }
 
-  timespec deadline = {};
+  timespec deadline = {0, 0};
   if (clock_gettime(CLOCK_MONOTONIC, &deadline) == -1) {
     std::cerr << "clock_gettime: " << strerror(errno) << std::endl;
     return 1;
@@ -207,7 +207,7 @@ int main(int argc, char *argv[]) {
         deadline.tv_nsec -= NANOSECONDS_PER_SECOND;
       }
 
-      timespec now = {};
+      timespec now = {0, 0};
       if (clock_gettime(CLOCK_MONOTONIC, &now) == -1) {
         std::cerr << "clock_gettime: " << strerror(errno) << std::endl;
         return 1;
@@ -238,7 +238,7 @@ int main(int argc, char *argv[]) {
 #else
       addr.sin_port = udp->uh_dport;
 #endif
-      addr.sin_addr = {ip->ip_dst};
+      addr.sin_addr = ip->ip_dst;
       auto n = sendto(fd, d, len, 0, reinterpret_cast<sockaddr *>(&addr),
                       sizeof(addr));
       if (n != len) {
